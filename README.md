@@ -1,15 +1,16 @@
-# prime-rl - decentralized RL training at scale
+# Trainer
 
-fork of prime to add RL training at scale. Private for now
+strip off version of the [prime](https://github.com/primeIntellect-ai/prime) framework
 
+
+## install
 
 quick install
 ```
-curl -sSL https://raw.githubusercontent.com/PrimeIntellect-ai/prime-rl/main/scripts/install/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/samsja/trainer/main/scripts/install/install.sh | bash
 ```
 
-
-## Dev
+long install
 
 
 1. Clone: 
@@ -33,45 +34,41 @@ source .venv/bin/activate
 uv sync
 ```
 
-4. Precommit install
+## Train
 
-```bash
-uv pre-commit install
-```
-
-5. Test
-
-```bash
-uv run pytest
-```
-
-6. debug run 
+### debug run 
 
 ```bash
 uv run torchrun --nproc_per_node=2 src/zeroband/train.py @ configs/debug/normal.toml
 ```
 
-...
+### run on 8xH100
 
-## Checkpoints management
-
-To save a checkpoint to gcp you need to:
-
-authentificate
+150M
 ```bash
-gcloud auth login yourname@primeintellect.ai
+uv run torchrun --nproc_per_node=2 src/zeroband/train.py @ configs/150M/H100.toml
 ```
 
-then to push a file or a folder
-
+1B
 ```bash
-gsutil -m cp -r yourfile gs://workspaces_research/yourname/yourfolder/.
+uv run torchrun --nproc_per_node=2 src/zeroband/train.py @ configs/1B/H100.toml
 ```
 
-to download a file or a folder
+
+## Dev
+
+ Precommit install
 
 ```bash
-gcloud storage cp -r  gs://workspaces_research/yourname/yourfile .
+uv pre-commit install
 ```
+
+ Test
+
+```bash
+uv run pytest
+```
+
+
 
 
